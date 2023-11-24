@@ -74,7 +74,7 @@ metadata:
 spec:
   resources:
     requests:
-      storage: 1i
+      storage: 1Gi
   accessModes:
     - ReadWriteMany
   storageClassName: piwigo-config
