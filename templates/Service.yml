@@ -14,10 +14,11 @@ spec:
   selector:
     {{- include "piwigo.selectorLabels" . | nindent 4 }}
 ---
+# cannot use "-" because piwigo bug in install.php
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "piwigo.fullname" . }}-mysql
+  name: {{ include "piwigo.fullname" . }}mysql
   namespace: {{ .Values.namespace }}
 spec:
   type: ClusterIP
