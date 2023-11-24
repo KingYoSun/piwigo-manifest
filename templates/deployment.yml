@@ -29,7 +29,7 @@ spec:
             - name: {{ include "piwigo.fullname" . }}-configuration
               mountPath: /config
               readOnly: true
-            - name: piwigo-gallery
+            - name: piwigo-gallery-pvc
               mountPath: /gallery
           ports:
             - containerPort: 80
@@ -37,7 +37,7 @@ spec:
         - name: {{ include "piwigo.fullname" . }}-configuration
           persistentVolumeClaim:
             claimName: piwigo-config
-        - name: piwigo-files-pvc
+        - name: piwigo-gallery-pvc
           persistentVolumeClaim:
             claimName: piwigo-gallery
 ---
