@@ -35,7 +35,7 @@ spec:
       hostAliases:
         - ip: {{ .Values.db_ip }}
           hostnames:
-          - "piwigo_db"
+          - "piwigodb"
       volumes:
         - name: {{ include "piwigo.fullname" . }}-configuration
           persistentVolumeClaim:
