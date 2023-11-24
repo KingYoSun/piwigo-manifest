@@ -20,9 +20,9 @@ spec:
           image: lscr.io/linuxserver/piwigo:latest
           env:
             - name: PUID
-              value: {{ .Values.puid }}
+              value: "{{ .Values.puid }}"
             - name: PGID
-              value: {{ .Values.pgid }}
+              value: "{{ .Values.pgid }}"
             - name: TZ
               value: {{ .Values.tz }}
           volumeMounts:
