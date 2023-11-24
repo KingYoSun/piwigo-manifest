@@ -1,0 +1,80 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: piwigo-mysql
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: piwigo-mysql
+  hostPath:
+    path: /data/piwigo-mysql
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: piwigo-mysql
+  namespace: piwigo
+spec:
+  resources:
+    requests:
+      storage: 250Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: piwigo-mysql
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: piwigo-gallery
+spec:
+  capacity:
+    storage: 500Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: piwigo-gallery
+  hostPath:
+    path: /data/piwigo-gallery
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: piwigo-gallery
+  namespace: piwigo
+spec:
+  resources:
+    requests:
+      storage: 500Gi
+  accessModes:
+    - ReadWriteMany
+  storageClassName: piwigo-gallery
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: piwigo-config
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: piwigo-config
+  hostPath:
+    path: /data/piwigo-config
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: piwigo-config
+  namespace: piwigo
+spec:
+  resources:
+    requests:
+      storage: 1i
+  accessModes:
+    - ReadWriteMany
+  storageClassName: piwigo-config

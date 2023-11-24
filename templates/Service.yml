@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "piwigo.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  annotations:
+    dev.okteto.com/auto-ingress: "true"
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "piwigo.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "piwigo.fullname" . }}-mysql
+  namespace: {{ .Values.namespace }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3306
+      protocol: TCP
+  selector:
+    {{- include "piwigo-mysql.selectorLabels" . | nindent 4 }}

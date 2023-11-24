@@ -1,0 +1,8 @@
+namaspace: piwigo
+puid: 1000
+pgid: 1000
+tz: "Asia/Tokyo"
+clouddflared_token: needoverride
+db_user: admin
+db_pass: NeedOverride
+db_root_pass: NeedOverride

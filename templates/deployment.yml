@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "piwigo.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "piwigo.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "piwigo.selectorLabels" . | nindent 6 }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        {{- include "piwigo.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: piwigo
+          image: lscr.io/linuxserver/piwigo:latest
+          env:
+            - name: PUID
+              value: {{ .Values.puid }}
+            - name: PGID
+              value: {{ .Values.pgid }}
+            - name: TZ
+              value: {{ .Values.tz }}
+          volumeMounts:
+            - name: {{ include "piwigo.fullname" . }}-configuration
+              mountPath: /config
+              readOnly: true
+            - name: piwigo-gallery
+              mountPath: /gallery
+          ports:
+            - containerPort: 80
+      volumes:
+        - name: {{ include "piwigo.fullname" . }}-configuration
+          persistentVolumeClaim:
+            claimName: piwigo-config
+        - name: piwigo-files-pvc
+          persistentVolumeClaim:
+            claimName: piwigo-gallery
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: piwigo-mysql
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "piwigo-mysql.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "piwigo-mysql.selectorLabels" . | nindent 6 }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        {{- include "piwigo-mysql.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0.35
+          env:
+            - name: MYSQL_DATABASE
+              value: "piwigo"
+            - name: MYSQL_USER
+              value: {{ .Values.db_user }}
+            - name: MYSQL_PASSWORD
+              value: {{ .Values.db_pass }}
+            - name: MYSQL_ROOT_PASSWORD
+              value: {{ .Values.db_root_pass }}
+            - name: TZ
+              value: {{ .Values.tz }}
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: piwigo-mysql-data
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: piwigo-mysql-data
+          persistentVolumeClaim:
+            claimName: piwigo-mysql
