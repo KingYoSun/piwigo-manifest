@@ -28,7 +28,6 @@ spec:
           volumeMounts:
             - name: {{ include "piwigo.fullname" . }}-configuration
               mountPath: /config
-              readOnly: true
             - name: piwigo-gallery-pvc
               mountPath: /gallery
           ports:
