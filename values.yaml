@@ -1,6 +1,6 @@
 namaspace: piwigo
-puid: "1000"
-pgid: "1000"
+puid: 1000
+pgid: 1000
 tz: "Asia/Tokyo"
 clouddflared_token: needoverride
 db_user: admin
