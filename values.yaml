@@ -6,3 +6,4 @@ clouddflared_token: needoverride
 db_user: admin
 db_pass: NeedOverride
 db_root_pass: NeedOverride
+db_ip: NeedOverride

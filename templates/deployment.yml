@@ -32,6 +32,10 @@ spec:
               mountPath: /gallery
           ports:
             - containerPort: 80
+      hostAliases:
+        - ip: {{ .Values.db_ip }}
+          hostnames:
+          - "piwigo_db"
       volumes:
         - name: {{ include "piwigo.fullname" . }}-configuration
           persistentVolumeClaim:
